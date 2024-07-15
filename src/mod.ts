@@ -34,10 +34,15 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 if (item._props.Ergonomics < 0) {
                     item._props.Ergonomics = 0;
                 }
-            } else if (this.modConfig.ModifyEquipment && itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
-                item._props.speedPenaltyPercent = 0;
-                item._props.mousePenalty = 0;
-                item._props.weaponErgonomicPenalty = 0;
+            } else if (itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
+                if (this.modConfig.ModifyEquipment) {
+                    item._props.speedPenaltyPercent = 0;
+                    item._props.mousePenalty = 0;
+                    item._props.weaponErgonomicPenalty = 0;
+                }
+                if (this.modConfig.RemoveHearingPenalty) {
+                    item._props.DeafStrength = "None";
+                }
             }
         }
     }
