@@ -4,5 +4,17 @@
     // Removes negative ergo effects from attachments.
     "ModifyWeaponAttachments": true,
     // Remove hearing penalty on helmets such as the altyn
-    "RemoveHearingPenalty": true
+    "RemoveHearingPenalty": true,
+	
+	"Equipment": {
+		"RemoveErgoPenalty": true,
+		"RemoveTurnPenalty": true,
+		"RemoveMovePenalty": true,
+		"RemoveHearingPenalty": true
+	},
+	"Weapons": {
+		"RemoveErgoPenalty": true,
+		"HeatingPenaltyModifier": 1.0,
+		
+	}
 }
