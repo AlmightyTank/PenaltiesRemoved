@@ -14,6 +14,10 @@
 		"RemoveErgoPenalty": true,
         // Remove recoil penalties
         "RemoveRecoilPenalty": true,
+        // Remove accuracy penalties
+        "RemoveAccuracyPenalty": true,
+        // Remove velocity penalties
+        "RemoveVelocityPenalty": true,
 		// Silencers and muzzle attachments don't affect how much heat is generated when firing
 		"NormalizeMuzzleOverheating": true,
 		// All attachments no longer change how quickly durability is reduced on the weapon

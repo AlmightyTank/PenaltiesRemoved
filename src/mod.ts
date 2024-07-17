@@ -13,8 +13,31 @@ const armoredEquipmentId = "57bef4c42459772e8d35a53b";
 const vestId = "5448e5284bdc2dcb718b4567";
 const backpackId = "5448e53e4bdc2d60728b4567";
 
+interface Config {
+    Equipment: Equipment;
+    Weapons: Weapons;
+}
+
+interface Weapons {
+    Enabled: boolean;
+    RemoveErgoPenalty: boolean;
+    RemoveRecoilPenalty: boolean;
+    RemoveAccuracyPenalty: boolean;
+    RemoveVelocityPenalty: boolean;
+    NormalizeMuzzleOverheating: boolean;
+    NormalizeDurabilityBurn: boolean;
+}
+
+interface Equipment {
+    Enabled: boolean;
+    RemoveErgoPenalty: boolean;
+    RemoveTurnPenalty: boolean;
+    RemoveMovePenalty: boolean;
+    RemoveHearingPenalty: boolean;
+}
+
 class PenaltiesRemoved implements IPostDBLoadMod {
-    private modConfig;
+    private modConfig: Config;
     private logger: ILogger;
 
     public postDBLoad(container: DependencyContainer): void {
@@ -34,14 +57,17 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 if (this.modConfig.Weapons.RemoveErgoPenalty && item._props.Ergonomics < 0) {
                     item._props.Ergonomics = 0;
                 }
+                if (this.modConfig.Weapons.RemoveRecoilPenalty && item._props.Recoil < 0) {
+                    item._props.Recoil = 0;
+                }
+                if (this.modConfig.Weapons.RemoveAccuracyPenalty && item._props.Accuracy < 0) {
+                    item._props.Accuracy = 0;
+                }
                 if (this.modConfig.Weapons.NormalizeMuzzleOverheating && item._props.HeatFactor != 1.0) {
                     item._props.HeatFactor = 1.0;
                 }
                 if (this.modConfig.Weapons.NormalizeDurabilityBurn && item._props.DurabilityBurnModificator != 1.0) {
                     item._props.DurabilityBurnModificator = 1.0;
-                }
-                if (this.modConfig.Weapons.RemoveRecoilPenalty && item._props.Recoil < 0) {
-                    item._props.Recoil = 0;
                 }
             } else if (this.modConfig.Equipment.Enabled && itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
                 if (this.modConfig.Equipment.RemoveErgoPenalty) {
