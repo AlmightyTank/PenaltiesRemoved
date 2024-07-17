@@ -30,17 +30,30 @@ class PenaltiesRemoved implements IPostDBLoadMod {
 
         for (const itemId in items) {
             const item = items[itemId];
-            if (this.modConfig.ModifyWeaponAttachments && itemHelper.isOfBaseclass(itemId, weaponModId)) {
-                if (item._props.Ergonomics < 0) {
+            if (this.modConfig.Weapons.Enabled && itemHelper.isOfBaseclass(itemId, weaponModId)) {
+                if (this.modConfig.Weapons.RemoveErgoPenalty && item._props.Ergonomics < 0) {
                     item._props.Ergonomics = 0;
                 }
-            } else if (itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
-                if (this.modConfig.ModifyEquipment) {
-                    item._props.speedPenaltyPercent = 0;
-                    item._props.mousePenalty = 0;
+                if (this.modConfig.Weapons.NormalizeMuzzleOverheating && item._props.HeatFactor != 1.0) {
+                    item._props.HeatFactor = 1.0;
+                }
+                if (this.modConfig.Weapons.NormalizeDurabilityBurn && item._props.DurabilityBurnModificator != 1.0) {
+                    item._props.DurabilityBurnModificator = 1.0;
+                }
+                if (this.modConfig.Weapons.RemoveRecoilPenalty && item._props.Recoil < 0) {
+                    item._props.Recoil = 0;
+                }
+            } else if (this.modConfig.Equipment.Enabled && itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
+                if (this.modConfig.Equipment.RemoveErgoPenalty) {
                     item._props.weaponErgonomicPenalty = 0;
                 }
-                if (this.modConfig.RemoveHearingPenalty) {
+                if (this.modConfig.Equipment.RemoveTurnPenalty) {
+                    item._props.mousePenalty = 0;
+                }
+                if (this.modConfig.Equipment.RemoveMovePenalty) {
+                    item._props.speedPenaltyPercent = 0;
+                }
+                if (this.modConfig.Equipment.RemoveHearingPenalty) {
                     item._props.DeafStrength = "None";
                 }
             }

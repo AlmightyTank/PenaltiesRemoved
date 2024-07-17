@@ -1,20 +1,22 @@
 {
-    // Removes movement, turn, and ergo penalties from equipment (Armor, Plates, Rigs, Backpacks, Facemasks, Helmets)
-    "ModifyEquipment": true,
-    // Removes negative ergo effects from attachments.
-    "ModifyWeaponAttachments": true,
-    // Remove hearing penalty on helmets such as the altyn
-    "RemoveHearingPenalty": true,
-	
 	"Equipment": {
+		"Enabled": true,
+		// Armor Penalities
 		"RemoveErgoPenalty": true,
 		"RemoveTurnPenalty": true,
 		"RemoveMovePenalty": true,
+		// Only applies to helmets.
 		"RemoveHearingPenalty": true
 	},
 	"Weapons": {
+		"Enabled": true,
+		// Remove negative ergo penalties
 		"RemoveErgoPenalty": true,
-		"HeatingPenaltyModifier": 1.0,
-		
+        // Remove recoil penalties
+        "RemoveRecoilPenalty": true,
+		// Silencers and muzzle attachments don't affect how much heat is generated when firing
+		"NormalizeMuzzleOverheating": true,
+		// All attachments no longer change how quickly durability is reduced on the weapon
+		"NormalizeDurabilityBurn": true		
 	}
 }
