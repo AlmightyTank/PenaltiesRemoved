@@ -12,8 +12,9 @@ const weaponModId = "5448fe124bdc2da5018b4567";
 const armoredEquipmentId = "57bef4c42459772e8d35a53b";
 const vestId = "5448e5284bdc2dcb718b4567";
 const backpackId = "5448e53e4bdc2d60728b4567";
+const headphonesId = "5645bcb74bdc2ded0b8b4578";
 
-interface Config {
+interface ModConfig {
     Equipment: Equipment;
     Weapons: Weapons;
 }
@@ -34,10 +35,12 @@ interface Equipment {
     RemoveTurnPenalty: boolean;
     RemoveMovePenalty: boolean;
     RemoveHearingPenalty: boolean;
+    AudioDistortionModifier: number;
+    AmbientNoiseOffsetAmount: number;
 }
 
 class PenaltiesRemoved implements IPostDBLoadMod {
-    private modConfig: Config;
+    private modConfig: ModConfig;
     private logger: ILogger;
 
     public postDBLoad(container: DependencyContainer): void {
@@ -69,19 +72,30 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 if (this.modConfig.Weapons.NormalizeDurabilityBurn && item._props.DurabilityBurnModificator != 1.0) {
                     item._props.DurabilityBurnModificator = 1.0;
                 }
-            } else if (this.modConfig.Equipment.Enabled && itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
-                if (this.modConfig.Equipment.RemoveErgoPenalty) {
-                    item._props.weaponErgonomicPenalty = 0;
+            } else if (this.modConfig.Equipment.Enabled) {
+                if (itemHelper.isOfBaseclass(itemId, headphonesId)) {
+                    if (this.modConfig.Equipment.AudioDistortionModifier != 1.0) {
+                        item._props.Distortion *= this.modConfig.Equipment.AudioDistortionModifier;
+                    }
+                    if (this.modConfig.Equipment.AmbientNoiseOffsetAmount != 0) {
+                        item._props.AmbientVolume += this.modConfig.Equipment.AmbientNoiseOffsetAmount;
+                    }
                 }
-                if (this.modConfig.Equipment.RemoveTurnPenalty) {
-                    item._props.mousePenalty = 0;
+                if (itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
+                    if (this.modConfig.Equipment.RemoveErgoPenalty) {
+                        item._props.weaponErgonomicPenalty = 0;
+                    }
+                    if (this.modConfig.Equipment.RemoveTurnPenalty) {
+                        item._props.mousePenalty = 0;
+                    }
+                    if (this.modConfig.Equipment.RemoveMovePenalty) {
+                        item._props.speedPenaltyPercent = 0;
+                    }
+                    if (this.modConfig.Equipment.RemoveHearingPenalty) {
+                        item._props.DeafStrength = "None";
+                    }
                 }
-                if (this.modConfig.Equipment.RemoveMovePenalty) {
-                    item._props.speedPenaltyPercent = 0;
-                }
-                if (this.modConfig.Equipment.RemoveHearingPenalty) {
-                    item._props.DeafStrength = "None";
-                }
+
             }
         }
     }
