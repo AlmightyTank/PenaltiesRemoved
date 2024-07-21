@@ -21,8 +21,8 @@ interface Weapons {
     RemoveRecoilPenalty: boolean;
     RemoveAccuracyPenalty: boolean;
     RemoveVelocityPenalty: boolean;
-    NormalizeMuzzleOverheating: boolean;
-    NormalizeDurabilityBurn: boolean;
+    RemoveMuzzleOverheatingPenalty: boolean;
+    RemoveDurabilityBurnPenalty: boolean;
 }
 
 interface Equipment {
@@ -63,10 +63,10 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 if (this.modConfig.Weapons.RemoveAccuracyPenalty && item._props.Accuracy < 0) {
                     item._props.Accuracy = 0;
                 }
-                if (this.modConfig.Weapons.NormalizeMuzzleOverheating && item._props.HeatFactor != 1.0) {
+                if (this.modConfig.Weapons.RemoveMuzzleOverheatingPenalty && item._props.HeatFactor > 1.0) {
                     item._props.HeatFactor = 1.0;
                 }
-                if (this.modConfig.Weapons.NormalizeDurabilityBurn && item._props.DurabilityBurnModificator != 1.0) {
+                if (this.modConfig.Weapons.RemoveDurabilityBurnPenalty && item._props.DurabilityBurnModificator > 1.0) {
                     item._props.DurabilityBurnModificator = 1.0;
                 }
             } else if (this.modConfig.Equipment.Enabled) {
