@@ -7,13 +7,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { VFS } from "@spt/utils/VFS";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
-
-const weaponModId = "5448fe124bdc2da5018b4567";
-const armoredEquipmentId = "57bef4c42459772e8d35a53b";
-const vestId = "5448e5284bdc2dcb718b4567";
-const backpackId = "5448e53e4bdc2d60728b4567";
-const headphonesId = "5645bcb74bdc2ded0b8b4578";
-
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
 
 // #region ModConfig 
 interface ModConfig {
@@ -59,7 +53,7 @@ class PenaltiesRemoved implements IPostDBLoadMod {
 
         for (const itemId in items) {
             const item = items[itemId];
-            if (this.modConfig.Weapons.Enabled && itemHelper.isOfBaseclass(itemId, weaponModId)) {
+            if (this.modConfig.Weapons.Enabled && itemHelper.isOfBaseclass(itemId, BaseClasses.MOD)) {
                 if (this.modConfig.Weapons.RemoveErgoPenalty && item._props.Ergonomics < 0) {
                     item._props.Ergonomics = 0;
                 }
@@ -76,7 +70,7 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                     item._props.DurabilityBurnModificator = 1.0;
                 }
             } else if (this.modConfig.Equipment.Enabled) {
-                if (itemHelper.isOfBaseclass(itemId, headphonesId)) {
+                if (itemHelper.isOfBaseclass(itemId, BaseClasses.HEADPHONES)) {
                     if (this.modConfig.Equipment.AudioDistortionModifier != 1.0) {
                         item._props.Distortion *= this.modConfig.Equipment.AudioDistortionModifier;
                     }
@@ -84,7 +78,7 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                         item._props.AmbientVolume += this.modConfig.Equipment.AmbientNoiseOffsetAmount;
                     }
                 }
-                if (itemHelper.isOfBaseclasses(itemId, [armoredEquipmentId, vestId, backpackId])) {
+                if (itemHelper.isOfBaseclasses(itemId, [BaseClasses.ARMORED_EQUIPMENT, BaseClasses.VEST, BaseClasses.BACKPACK])) {
                     if (this.modConfig.Equipment.RemoveErgoPenalty) {
                         item._props.weaponErgonomicPenalty = 0;
                     }
