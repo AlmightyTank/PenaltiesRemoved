@@ -14,6 +14,8 @@ const vestId = "5448e5284bdc2dcb718b4567";
 const backpackId = "5448e53e4bdc2d60728b4567";
 const headphonesId = "5645bcb74bdc2ded0b8b4578";
 
+
+// #region ModConfig 
 interface ModConfig {
     Equipment: Equipment;
     Weapons: Weapons;
@@ -38,6 +40,7 @@ interface Equipment {
     AudioDistortionModifier: number;
     AmbientNoiseOffsetAmount: number;
 }
+// #endregion
 
 class PenaltiesRemoved implements IPostDBLoadMod {
     private modConfig: ModConfig;
