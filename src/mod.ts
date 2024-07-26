@@ -92,7 +92,6 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                         item._props.DeafStrength = "None";
                     }
                 }
-
             }
         }
     }
