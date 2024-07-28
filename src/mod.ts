@@ -57,7 +57,7 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 if (this.modConfig.Weapons.RemoveErgoPenalty && item._props.Ergonomics < 0) {
                     item._props.Ergonomics = 0;
                 }
-                if (this.modConfig.Weapons.RemoveRecoilPenalty && item._props.Recoil < 0) {
+                if (this.modConfig.Weapons.RemoveRecoilPenalty && item._props.Recoil > 0) {
                     item._props.Recoil = 0;
                 }
                 if (this.modConfig.Weapons.RemoveAccuracyPenalty && item._props.Accuracy < 0) {
