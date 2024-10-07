@@ -27,6 +27,19 @@
 		// Silencers and muzzle attachments don't affect how much heat is generated when firing
 		"RemoveMuzzleOverheatingPenalty": true,
 		// All attachments no longer change how quickly durability is reduced on the weapon
-		"RemoveDurabilityBurnPenalty": true		
-	}
+		"RemoveDurabilityBurnPenalty": true
+	},
+    "Ammo": {
+        "Enabled": true,
+        // Set to 0.0 to disable ammo misfiring penalties
+        "MisfireMultiplier": 1.0,
+        // Ammos don't affect how much heat is generated when firing
+        "RemoveMuzzleOverheatingPenalty": true,
+        // Ammos don't affect durability loss
+        "RemoveDurabilityBurnPenalty": true,
+        // Ammos don't affect recoil
+        "RemoveAmmoRecoilPenalty": true,
+        // Ammos don't affect accuracy
+        "RemoveAmmoAccuracyPenalty": true
+    }
 }

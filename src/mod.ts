@@ -13,6 +13,7 @@ import { BaseClasses } from "@spt/models/enums/BaseClasses";
 interface ModConfig {
     Equipment: Equipment;
     Weapons: Weapons;
+    Ammo: Ammo;
 }
 
 interface Weapons {
@@ -33,6 +34,15 @@ interface Equipment {
     RemoveHearingPenalty: boolean;
     AudioDistortionModifier: number;
     AmbientNoiseOffsetAmount: number;
+}
+
+interface Ammo {
+    Enabled: boolean;
+    MisfireMultiplier: number;
+    RemoveMuzzleOverheatingPenalty: boolean;
+    RemoveDurabilityBurnPenalty: boolean;
+    RemoveAmmoRecoilPenalty: boolean;
+    RemoveAmmoAccuracyPenalty: boolean;
 }
 // #endregion
 
@@ -68,6 +78,22 @@ class PenaltiesRemoved implements IPostDBLoadMod {
                 }
                 if (this.modConfig.Weapons.RemoveDurabilityBurnPenalty && item._props.DurabilityBurnModificator > 1.0) {
                     item._props.DurabilityBurnModificator = 1.0;
+                }
+            } else if (this.modConfig.Ammo.Enabled && itemHelper.isOfBaseclass(itemId, BaseClasses.AMMO)) {
+                if (this.modConfig.Ammo.MisfireMultiplier && item._props.MisfireChance != 0) {
+                    item._props.MisfireChance *= this.modConfig.Ammo.MisfireMultiplier;
+                }
+                if (this.modConfig.Ammo.RemoveAmmoAccuracyPenalty && item._props.ammoAccr < 0) {
+                    item._props.ammoAccr = 0;
+                }
+                if (this.modConfig.Ammo.RemoveAmmoRecoilPenalty && item._props.ammoRec > 0) {
+                    item._props.ammoRec = 0;
+                }
+                if (this.modConfig.Ammo.RemoveDurabilityBurnPenalty && item._props.DurabilityBurnModificator > 1.0) {
+                    item._props.DurabilityBurnModificator = 1.0;
+                }
+                if (this.modConfig.Ammo.RemoveMuzzleOverheatingPenalty && item._props.HeatFactor > 1.0) {
+                    item._props.HeatFactor = 1.0;
                 }
             } else if (this.modConfig.Equipment.Enabled) {
                 if (itemHelper.isOfBaseclass(itemId, BaseClasses.HEADPHONES)) {
