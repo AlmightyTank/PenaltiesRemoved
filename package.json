@@ -3,7 +3,7 @@
     "version": "1.2.1",
     "main": "src/mod.js",
     "license": "MIT",
-    "author": "Mattdokn & AMightyTank",
+    "author": "Mattdokn, reuploaded by AMightyTank",
     "sptVersion": "~3.11",
     "loadBefore": [],
     "loadAfter": [],
